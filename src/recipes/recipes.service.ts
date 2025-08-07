@@ -14,4 +14,16 @@ export class RecipesService {
       },
     });
   }
+
+  async getAll() {
+    return this.prisma.recipe.findMany();
+  }
+
+  async getMyRecipes(email: string) {
+    return this.prisma.recipe.findMany({
+      where: {
+        userEmail: email,
+      },
+    });
+  }
 }

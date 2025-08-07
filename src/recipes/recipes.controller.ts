@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards, Req } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards, Req, Get } from '@nestjs/common';
 import { RecipesService } from './recipes.service';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { AuthGuard } from '../common/guards';
@@ -12,5 +12,18 @@ export class RecipesController {
   async create(@Body() dto: CreateRecipeDto, @Req() req) {
     const email = req.user.email;
     return this.recipesService.create(dto, email);
+  }
+
+  @Get()
+  @UseGuards(AuthGuard)
+  async getAll() {
+    return this.recipesService.getAll();
+  }
+
+  @Get('my')
+  @UseGuards(AuthGuard)
+  async getMine(@Req() req) {
+    const email = req.user.email;
+    return this.recipesService.getMyRecipes(email);
   }
 }
