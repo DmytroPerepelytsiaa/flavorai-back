@@ -3,10 +3,12 @@ import { JwtModule } from '@nestjs/jwt';
 
 import { UsersModule } from './users/users.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { RecipesModule } from './recipes/recipes.module';
 
 @Module({
   imports: [
     UsersModule,
+    RecipesModule,
     PrismaModule,
     JwtModule.register({
       global: true,

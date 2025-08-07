@@ -8,10 +8,23 @@ generator client {
 }
 
 model User {
-  id         String   @id @default(uuid())
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-
-  email      String   @unique @db.VarChar(256)
+  id         String    @id @default(uuid())
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  email      String    @unique @db.VarChar(256)
   password   String
+  recipes    Recipe[]  @relation("UserRecipesByEmail")
+}
+
+model Recipe {
+  id           String   @id @default(uuid())
+  title        String
+  description  String?
+  instructions String
+  prepTime     Int
+  difficulty   String
+  ingredients  String
+  userEmail    String
+  user         User     @relation("UserRecipesByEmail", fields: [userEmail], references: [email])
+  createdAt    DateTime @default(now())
 }
